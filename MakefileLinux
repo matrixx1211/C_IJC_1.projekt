@@ -5,7 +5,6 @@
 # ...popis příkladu - poznámky, omezení, atd
 
 # proměnné
-LC_ALL = cs_CZ.utf8
 COMPILER = gcc
 CFLAGS =  -std=c11 -pedantic -Wall -Wextra -g -m32 
 MATH = -lm

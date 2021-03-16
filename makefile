@@ -5,7 +5,6 @@
 # ...popis příkladu - poznámky, omezení, atd
 
 # proměnné
-LC_ALL = cs_CZ.utf8
 COMPILER = gcc
 CFLAGS =  -std=c11 -pedantic -Wall -Wextra -g -m32 
 MATH = -lm
@@ -19,7 +18,7 @@ run: primes primes-i
 primes: primes.o error.o eratosthenes.o bitset.o
 	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.o -o primes $(MATH)
 
-primes-i: primes.o error-i.o eratosthenes.o bitset-i.o
+primes-i: primes.o error.o eratosthenes.o bitset-i.o
 	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.o -o primes $(MATH)
 
 steg-decode: error.o eratosthenes.o bitset.o ppm.o steg-decode.o	
