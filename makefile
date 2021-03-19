@@ -6,7 +6,7 @@
 
 # proměnné
 COMPILER = gcc
-CFLAGS =  -std=c11 -pedantic -Wall -Wextra -g -m32 
+CFLAGS = -std=c11 -pedantic -Wall -Wextra -g 
 MATH = -lm
 
 all: primes primes-i steg-decode
@@ -18,7 +18,7 @@ run: primes primes-i
 primes: primes.o error.o eratosthenes.o bitset.o
 	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.o -o primes $(MATH)
 
-primes-i: primes.o error.o eratosthenes.o bitset-i.o
+primes-i: primes.o error-i.o eratosthenes.o bitset-i.o
 	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.o -o primes $(MATH)
 
 steg-decode: error.o eratosthenes.o bitset.o ppm.o steg-decode.o	
@@ -54,6 +54,9 @@ eratosthenes-i.o: eratosthenes.c
 error.o: error.c
 	$(COMPILER) $(CFLAGS) -c error.c -o error.o 
 
+error-i.o: error.c
+	$(COMPILER) $(CFLAGS) -DUSE_INLINE -c error.c -o error-i.o 
+
 ppm.o: ppm.c
 	$(COMPILER) $(CFLAGS) -c ppm.c -o ppm.o
 
@@ -66,4 +69,5 @@ steg-decode.o: steg-decode.c
 clean: clear
 
 clear:
-	del *.o *.exe
+	clear
+	rm *.o

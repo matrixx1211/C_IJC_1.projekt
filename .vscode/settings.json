@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "bitset.h": "c",
+        "limits.h": "c",
+        "error.h": "c",
+        "stdio.h": "c",
+        "stdarg.h": "c",
+        "stdlib.h": "c"
+    }
+}
