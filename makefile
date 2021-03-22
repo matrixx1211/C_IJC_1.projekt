@@ -19,7 +19,7 @@ primes: primes.o error.o eratosthenes.o bitset.o
 	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.o -o primes $(MATH)
 
 primes-i: primes.o error-i.o eratosthenes.o bitset-i.o
-	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.o -o primes $(MATH)
+	$(COMPILER) $(CFLAGS) primes.o error-i.o eratosthenes.o bitset-i.o -o primes-i $(MATH)
 
 steg-decode: error.o eratosthenes.o bitset.o ppm.o steg-decode.o	
 	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.o -o primes $(MATH)
@@ -32,13 +32,13 @@ steg-decode: error.o eratosthenes.o bitset.o ppm.o steg-decode.o
 primes.o: primes.c
 	$(COMPILER) $(CFLAGS) -c primes.c -o primes.o
 
-eratosthenes.o: eratosthenes.c
+eratosthenes.o: eratosthenes.c eratosthenes.h
 	$(COMPILER) $(CFLAGS) -c eratosthenes.c -o eratosthenes.o
 
-bitset.o: bitset.c
+bitset.o: bitset.c bitset.h
 	$(COMPILER) $(CFLAGS) -c bitset.c -o bitset.o
 
-bitset-i.o: bitset.c
+bitset-i.o: bitset.c bitset.h
 	$(COMPILER) $(CFLAGS) -DUSE_INLINE -c bitset.c -o bitset-i.o 
 
 primes-i.o: primes.c
@@ -51,13 +51,13 @@ eratosthenes-i.o: eratosthenes.c
 #		STEGDECODE		#
 #########################
 
-error.o: error.c
+error.o: error.c error.h
 	$(COMPILER) $(CFLAGS) -c error.c -o error.o 
 
-error-i.o: error.c
+error-i.o: error.c error.h
 	$(COMPILER) $(CFLAGS) -DUSE_INLINE -c error.c -o error-i.o 
 
-ppm.o: ppm.c
+ppm.o: ppm.c ppm.h
 	$(COMPILER) $(CFLAGS) -c ppm.c -o ppm.o
 
 steg-decode.o: steg-decode.c

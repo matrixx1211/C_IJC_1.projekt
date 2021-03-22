@@ -6,6 +6,8 @@
         "error.h": "c",
         "stdio.h": "c",
         "stdarg.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "ppm.h": "c",
+        "eratosthenes.h": "c"
     }
 }

@@ -6,6 +6,8 @@
 
 #ifndef PPM_H
 #define PPM_H
+
+#define LIMIT 3*8000*8000
 struct ppm
 {
     unsigned xsize;
@@ -17,7 +19,7 @@ struct ppm
     Načte obsah PPM souboru do dynamicky alokované struktury. 
     Při chybě formátu použije funkci warning_msg a vrátí NULL. 
 */
-struct ppm *ppm_read(const char *filename);
+struct ppm *ppm_read(const char *jmeno_souboru);
 
 /* 
     Uvolní paměť dynamicky alokovanou v ppm_read. 
