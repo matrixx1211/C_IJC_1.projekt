@@ -15,15 +15,14 @@ run: primes primes-i
 	time ./primes
 	time ./primes-i
 
-primes: primes.o error.o eratosthenes.o bitset.o
-	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.o -o primes $(MATH)
+steg-decode: error.o eratosthenes.o bitset.h ppm.o steg-decode.o	
+	$(COMPILER) $(CFLAGS) steg-decode.o error.o eratosthenes.o bitset.h ppm.o -o steg-decode $(MATH)
 
-primes-i: primes.o error-i.o eratosthenes.o bitset-i.o
-	$(COMPILER) $(CFLAGS) primes.o error-i.o eratosthenes.o bitset-i.o -o primes-i $(MATH)
+primes: primes.o error.o eratosthenes.o bitset.h
+	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.h -o primes $(MATH)
 
-steg-decode: error.o eratosthenes.o bitset.o ppm.o steg-decode.o	
-	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.o -o primes $(MATH)
-
+primes-i: primes.o error.o eratosthenes.o bitset.h
+	$(COMPILER) $(CFLAGS) primes.o error.o eratosthenes.o bitset.h -o primes-i $(MATH)
 
 #########################
 #		  PRIMES  		#
@@ -35,17 +34,8 @@ primes.o: primes.c
 eratosthenes.o: eratosthenes.c eratosthenes.h
 	$(COMPILER) $(CFLAGS) -c eratosthenes.c -o eratosthenes.o
 
-bitset.o: bitset.c bitset.h
-	$(COMPILER) $(CFLAGS) -c bitset.c -o bitset.o
-
-bitset-i.o: bitset.c bitset.h
-	$(COMPILER) $(CFLAGS) -DUSE_INLINE -c bitset.c -o bitset-i.o 
-
 primes-i.o: primes.c
 	$(COMPILER) $(CFLAGS) -DUSE_INLINE -c primes.c -o primes-i.o
-
-eratosthenes-i.o: eratosthenes.c
-	$(COMPILER) $(CFLAGS) -DUSE_INLINE -c eratosthenes.c -o eratosthenes-i.o
 
 #########################
 #		STEGDECODE		#
@@ -53,9 +43,6 @@ eratosthenes-i.o: eratosthenes.c
 
 error.o: error.c error.h
 	$(COMPILER) $(CFLAGS) -c error.c -o error.o 
-
-error-i.o: error.c error.h
-	$(COMPILER) $(CFLAGS) -DUSE_INLINE -c error.c -o error-i.o 
 
 ppm.o: ppm.c ppm.h
 	$(COMPILER) $(CFLAGS) -c ppm.c -o ppm.o
@@ -70,4 +57,4 @@ clean: clear
 
 clear:
 	clear
-	rm *.o
+	rm *.o primes primes-i steg-decode

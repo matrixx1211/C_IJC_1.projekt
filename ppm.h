@@ -7,7 +7,10 @@
 #ifndef PPM_H
 #define PPM_H
 
-#define LIMIT 3*8000*8000
+#define LIMIT 3 * 8000 * 8000
+/* 
+    Struktura pro data ze souboru .PPM
+*/
 struct ppm
 {
     unsigned xsize;

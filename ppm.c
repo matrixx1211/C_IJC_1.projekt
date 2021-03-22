@@ -1,8 +1,8 @@
 // ppm.c
 // Řešení IJC-DU1, příklad a), 23. 3. 2021
 // Autor: Marek Bitomský, FIT
-// Přeloženo: MinGW GCC 6.3.0
-// ...popis příkladu - poznámky, omezení, atd
+// Přeloženo: GCC 7.5.0
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,10 +41,26 @@ struct ppm *ppm_read(const char *jmeno_souboru)
         return NULL;
     }
 
+    // Testování barvy
+    if (barva != 255)
+    {
+        warning_msg("Hloubka barvy je rozdílná od '255'.\n");
+        fclose(pf);
+        return NULL;
+    }
+
+    // Testování rozlišení
+    if (vel_x <= 0 || vel_y <= 0) 
+    {
+        warning_msg("Rozlišení je menší nebo rovno 0.\n");
+        fclose(pf);
+        return NULL;
+    }
+
     // Kontrola velikosti
     size_t velikost = (3 * vel_x * vel_y);
 
-    if (velikost > LIMIT)
+    if (velikost > (LIMIT))
     {
         warning_msg("Velikost souboru '%s' je přílis velká.\n", jmeno_souboru);
         fclose(pf);

@@ -7,7 +7,6 @@
 #ifndef ERATOSTHENES_H
 #define ERATOSTHENES_H
 
-#include <math.h>
 #include "bitset.h"
 
 /*

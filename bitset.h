@@ -34,13 +34,13 @@ typedef unsigned long bitset_index_t;
     if (jmeno_pole == NULL)                                                                                               \
         error_exit("bitset_alloc: Chyba alokace paměti");                                                                 \
     jmeno_pole[0] = velikost;
+#ifndef USE_INLINE
 /* 
     Uvolní paměť použitou pro dynamicky alokované pole.
 */
 #define bitset_free(jmeno_pole) \
     free(jmeno_pole)
 
-#ifndef USE_INLINE
 /* 
     Vrátí velikost pole. 
 */
@@ -65,6 +65,14 @@ typedef unsigned long bitset_index_t;
     ((unsigned long)(index) >= bitset_size(jmeno_pole)) ? (error_exit("bit_array_getbit: Index %lu mimo rozsah 0..%lu", (unsigned long)(index), (jmeno_pole[0] - 1)), -1) : ((jmeno_pole[((unsigned long)(index) / ULONG_BITS) + 1] & (1UL << ((unsigned long)(index) % ULONG_BITS))) != 0)
 
 #else
+/*
+    Inline funkce, která dělá to stejné jako makro bitset_free.
+*/
+inline void bitset_free(bitset_t jmeno_pole)
+{
+    free(jmeno_pole);
+}
+
 /*
     Inline funkce, která dělá to stejné jako makro bitset_size.
 */
