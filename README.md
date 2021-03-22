@@ -13,8 +13,8 @@ Tento domácí úkol je o práci s bitovým polem.
 - [x] - soubor error.c
 ## PPM
 - [x] - soubor ppm.h
-- [ ] - soubor ppm.c
+- [x] - soubor ppm.c
 ## Primes
 - [x] - soubor primes.c (ještě doladit funkci ukládání)
 ## Steg-decode
-- [ ] - soubor steg-decode.c
+- [x] - soubor steg-decode.c

@@ -11,7 +11,7 @@
 #define VEL_POLE (200000000)
 
 #ifdef USE_INLINE
-
+// Použití inline funkcí místo maker
 extern inline void bitset_free(bitset_t jmeno_pole);
 extern inline unsigned long bitset_size(bitset_t jmeno_pole);
 extern inline unsigned long bitset_getbit(bitset_t jmeno_pole, bitset_index_t index);
@@ -47,7 +47,7 @@ int main()
     }
 
     // Výpis času
-    fprintf(stderr, "Time=%.3g\n", (double)(clock()-start)/CLOCKS_PER_SEC);
+    fprintf(stderr, "Time=%.3g\n", (double)(clock() - start) / CLOCKS_PER_SEC);
 
     return 0;
 }

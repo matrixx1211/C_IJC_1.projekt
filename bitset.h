@@ -1,8 +1,7 @@
 // bitset.h
 // Řešení IJC-DU1, příklad a), 23. 3. 2021
 // Autor: Marek Bitomský, FIT
-// Přeloženo: MinGW GCC 6.3.0
-// ...popis příkladu - poznámky, omezení, atd
+// Přeloženo: GCC 7.5.0
 
 #ifndef BITSET_H
 #define BITSET_H
@@ -22,7 +21,7 @@ typedef unsigned long bitset_index_t;
     Vytvoří pole o velikosti velikost a nastaví na 0-tý index jeho velikost. 
 */
 #define bitset_create(jmeno_pole, velikost)                                                          \
-    _Static_assert(velikost > 0, "bitset_create: neplatná velikost!");                               \
+    static_assert(velikost > 0, "bitset_create: neplatná velikost!");                               \
     unsigned long jmeno_pole[(velikost / ULONG_BITS) + ((velikost % ULONG_BITS) ? 1 : 0) + 1] = {0}; \
     jmeno_pole[0] = velikost;
 /*

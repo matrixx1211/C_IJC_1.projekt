@@ -4,94 +4,94 @@
 // Přeloženo: GCC 7.5.0
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 #include "ppm.h"
 #include "error.h"
 
 struct ppm *ppm_read(const char *jmeno_souboru)
 {
-    FILE *pf;
-
     // Otevření souboru
-    if ((pf = fopen(jmeno_souboru, "r")) == NULL)
+    FILE *soubor;
+    soubor = fopen(jmeno_souboru, "r");
+    if (soubor == NULL)
     {
         warning_msg("Soubor '%s' nelze otevřít.\n", jmeno_souboru);
         return NULL;
     }
 
     // Získání potřebných údajů z hlavičky souboru
-    unsigned int barva;
-    unsigned int vel_x;
-    unsigned int vel_y;
-    char typ_souboru[3];
+    unsigned char barva;
+    unsigned long vel_x;
+    unsigned long vel_y;
+    char typ_souboru[3] = {0};
 
-    if (fscanf(pf, "%2s %u %u %u", typ_souboru, &vel_x, &vel_y, &barva) < 4)
+    if (fscanf(soubor, "%2s\n%lu %lu\n%hhu\n", typ_souboru, &vel_x, &vel_y, &barva) != 4)
     {
+        fclose(soubor);
         warning_msg("Nešlo načíst hlavičku souboru '%s'.\n", jmeno_souboru);
-        fclose(pf);
         return NULL;
     }
 
     // Testování formátu
     if (strcmp(typ_souboru, "P6"))
     {
+        fclose(soubor);
         warning_msg("Špatný formát souboru: '%s'.\n", jmeno_souboru);
-        fclose(pf);
         return NULL;
     }
 
     // Testování barvy
     if (barva != 255)
     {
+        fclose(soubor);
         warning_msg("Hloubka barvy je rozdílná od '255'.\n");
-        fclose(pf);
         return NULL;
     }
 
     // Testování rozlišení
-    if (vel_x <= 0 || vel_y <= 0) 
+    if (vel_x <= 0 || vel_y <= 0)
     {
+        fclose(soubor);
         warning_msg("Rozlišení je menší nebo rovno 0.\n");
-        fclose(pf);
         return NULL;
     }
 
     // Kontrola velikosti
-    size_t velikost = (3 * vel_x * vel_y);
+    unsigned long velikost = (3 * vel_x * vel_y);
 
     if (velikost > (LIMIT))
     {
+        fclose(soubor);
         warning_msg("Velikost souboru '%s' je přílis velká.\n", jmeno_souboru);
-        fclose(pf);
         return NULL;
     }
 
     // Alokace paměti
-    struct ppm *pppm = malloc(sizeof(struct ppm) + velikost);
-    if (pppm == NULL)
+    struct ppm *obrazek = (struct ppm *)malloc(sizeof(struct ppm) + velikost);
+    if (obrazek == NULL)
     {
+        fclose(soubor);
         warning_msg("Alokace paměti selhala.\n");
-        fclose(pf);
         return NULL;
     }
 
     // Uložení velikosti do struktury
-    pppm->xsize = vel_x;
-    pppm->ysize = vel_y;
+    obrazek->xsize = vel_x;
+    obrazek->ysize = vel_y;
 
     // Uložení dat do souboru
-    if (fread(pppm->data, sizeof(char), velikost, pf) != velikost)
+    if ((fread(obrazek->data, 1, velikost, soubor)) != velikost)
     {
+        fclose(soubor);
+        free(obrazek);
         warning_msg("Nepodařilo se načíst data ze souboru '%s'.\n", jmeno_souboru);
-        fclose(pf);
-        free(pppm);
         return NULL;
     }
 
     // Uzavření souboru a vrácení struktury
-    fclose(pf);
-    return pppm;
+    fclose(soubor);
+    return obrazek;
 }
 
 void ppm_free(struct ppm *p)
